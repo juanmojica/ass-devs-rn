@@ -1,64 +1,62 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Software de Gerenciamento de Associados e Anuidades
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este software foi desenvolvido para facilitar a gerência dos associados e suas anuidades da associação "Devs do RN". Abaixo estão listadas as funcionalidades que o software oferece:
 
-## About Laravel
+## Funcionalidades
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Cadastro de associados: Nome, E-mail, CPF e Data de filiação.
+- Cadastro de anuidades: Ano e Valor. (Esta opção é disponível apenas para o perfil de Gerente)
+- Gestão do pagamento das anuidades dos associados.
+- Relatório dos associados que estão adimplentes e inadimplentes.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Requisitos
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- PHP 7.4.x
+- Composer
+- NPM
+- MySQL
 
-## Learning Laravel
+## Instalação
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Para instalar e utilizar o software, siga as instruções abaixo:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. Clone o repositório: `git clone https://github.com/juanmojica/ass-devs-rn.git`
+2. Acesse o diretório do projeto: `cd ass-devs-rn`
+3. Instale as dependências: `composer install`
+4. Instale as dependências: `npm install` e em seguida execute `npm run dev`
+5. Crie um banco de dados MySQL para o software.
+6. Configure as variáveis de ambiente do Laravel, utilizando o arquivo `.env.example` como modelo.
+    - Crie uma cópia do .env.example e mude o nome para .env
+    - No arquivo .env configure as seguintes variáveis de acordo com o banco de dados criado:
+        - DB_CONNECTION=mysql
+        - DB_HOST=127.0.0.1
+        - DB_PORT=3306
+        - DB_DATABASE=
+        - DB_USERNAME=root
+        - DB_PASSWORD=
+7. Rode as migrações do banco de dados: `php artisan migrate --seed`
+    - Após rodar as migrações serão criadas as tabelas e alguns dados fake para teste da aplicação.
+    - Serão criados dois usuários, um com o perfil de gerente e outro com o perfil usuário:
+        - Usuário com perfil de gerente:
+            - login: jp@devsrn.com
+            - senha: 123
+        - Usuário com perfil básico:
+            - login: pa@devsrn.com
+            - senha: 456
+8. Inicie o servidor: `php artisan serve`.
+9. Em seguida pode logar com o usuário desejado.
 
-## Laravel Sponsors
+## Informações sobre o funcionamento do sistema
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+1. Na aba Dashboard é exibido um gráfico com os associados adimplentes e os inadimplentes
+2. Na aba Associados é exibida a lista de associados com seus devidos botões:
+    - Esta aba ofere o CRUD de associados, porém na aba visualizar detalhes é listados, além dos dados pessoais 
+    do associado, a lista pagamentos deste informando a anuidades pagas e as devidas.
+3. Nas abas associados adimplentes e na associados inadimplentes também é possível manter os dados do associado,
+    no entanto,  como os próprios nomes sugerem, eles listam os associados de acordo com a sua situação de pagamento.
+4. Já a aba anuidades, prover o CRUD de anuidades e esse é disponível apenas para o gerente.
 
-### Premium Partners
+- OBS: Ao inserir uma anuidade, essa anuidade e atribuída para todos os usuários, porém o usuário só é considerado
+inadimplente se ele não pagou a anuidade do ano vigente ou alguma anterior a este. 
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
