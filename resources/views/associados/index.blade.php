@@ -51,14 +51,23 @@
                             {{ date('d/m/Y', strtotime($associado->data_filiacao)) }}
                         </td>
                         <td class="text-center">
-                            <a href="{{  route('associados-exibir', ['id' => $associado->id]) }}" class="bg-transparent hover:bg-blue-500 text-blue-500 font-semibold hover:text-white px-1 border-blue-500 hover:border-transparent rounded">
-                                <i class="fa fa-regular fa-eye"></i>
+                            <a 
+                                href="{{  route('associados-exibir', ['id' => $associado->id]) }}" 
+                                title="Exibir detalhes do associado"
+                                class="bg-transparent hover:bg-blue-500 text-blue-500 font-semibold hover:text-white px-1 border-blue-500 hover:border-transparent rounded">
+                                    <i class="fa fa-regular fa-eye"></i>
                             </a>
-                            <a href="{{ route('associados-editar', ['id' => $associado->id]) }}" class="bg-transparent hover:bg-yellow-500 text-yellow-500 font-semibold hover:text-white px-1 border-yellow-500 hover:border-transparent rounded">
-                                <i class="fa fa-regular fa-edit"></i>
+                            <a 
+                                title="Editar associado"
+                                href="{{ route('associados-editar', ['id' => $associado->id]) }}" 
+                                class="bg-transparent hover:bg-yellow-500 text-yellow-500 font-semibold hover:text-white px-1 border-yellow-500 hover:border-transparent rounded">
+                                    <i class="fa fa-regular fa-edit"></i>
                             </a>
-                            <a onclick="deletar( '{{ route('associados-deletar', ['id' => $associado->id]) }}' )" class="bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white px-1 border-red-500 hover:border-transparent rounded">
-                                <i class="fa fa-regular fa-trash"></i>
+                            <a 
+                                title="Deletar associado"
+                                onclick="deletar( '{{ route('associados-deletar', ['id' => $associado->id]) }}' )" 
+                                class="bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white px-1 border-red-500 hover:border-transparent rounded">
+                                    <i class="fa fa-regular fa-trash"></i>
                             </a>
                         </td>
                     </tr>
@@ -73,17 +82,17 @@
     </div>
 </x-app-layout>
 
- <form id="formDeletar" action="" method="POST" style="display: none;">
-     @csrf
-     @method('DELETE')
- </form>
- 
- <script>
+<form id="formDeletar" action="" method="POST" style="display: none;">
+    @csrf
+    @method('DELETE')
+</form>
+
+<script>
 
     $(document).ready(function() {
         $('.cpf').mask('000.000.000-00'); 
     });
-     
+    
     function deletar(rotaDeletar) {
 
         msg = 'Tem certeza que deseja deletar esse associado?'
@@ -95,8 +104,8 @@
         }
     }
 
- </script>
- 
+</script>
+
  
  
  

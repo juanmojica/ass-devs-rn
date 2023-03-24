@@ -1,3 +1,7 @@
+@php
+    $somaNaoPagos = 0.00;
+@endphp
+
 <x-app-layout>
     <h2 class="text-center">
         Ver detalhes do Associado
@@ -22,7 +26,7 @@
                         Valor
                     </th>
                     <th class="w-2/12 px-6 py-3 text-center text-xs font-medium text-gray-500">
-                        Status
+                        Pagamento
                     </th>
                     <th class="w-2/12 px-6 py-3 text-center text-xs font-medium text-gray-500">
                         Ações
@@ -42,30 +46,47 @@
                                 {{ $pagamento->ano }}
                             </td>
                             <td class="border-b px-2 py-2 valor">
-                                {{ $pagamento->valor }}
+                                R$ {{ number_format($pagamento->valor, 2, ',', '.') }}
                             </td>
                             <td class="border-b px-2 py-2">
                                 @if ($pagamento->pago)
-                                    <i class="fa fa-check"></i>
+                                    <i 
+                                        class="fa fa-regular fa-check text-green-500 border rounded border-green-500 p-0.5"
+                                        title="Pago">
+                                    </i>
+                                    <td>
+                                        -
+                                    </td>
                                 @else
-                                    <i class="fa fa-trash"></i>
+                                    <i 
+                                        title="Não Pago"
+                                        class="text-red-500 border rounded border-red-500 px-1">
+                                            <b>X</b>
+                                    </i>
+                                    <td class="text-center">
+                                        <a 
+                                            onclick="pagar('{{  route('pagamentos-pagar', ['id' => $pagamento->id, 'idAssociado' => $associado->id]) }}')"
+                                            class="bg-transparent hover:bg-green-500 text-green-500 font-semibold hover:text-white px-1 border-green-500 hover:border-transparent rounded"
+                                            title="Efetuar Pagamento">
+                                                <i class="fa fa-regular fa-money-bill-wave"></i>
+                                        </a>
+                                    </td>
+                                    @php
+                                        $somaNaoPagos += $pagamento->valor;
+                                    @endphp
                                 @endif
-                            </td>
-                            <td class="text-center">
-                                <a href="{{  route('pagamentos-exibir', ['id' => $pagamento->id]) }}" class="bg-transparent hover:bg-blue-500 text-blue-500 font-semibold hover:text-white px-1 border-blue-500 hover:border-transparent rounded">
-                                    <i class="fa fa-regular fa-eye"></i>
-                                </a>
-                                <a href="{{ route('pagamentos-editar', ['id' => $pagamento->id]) }}" class="bg-transparent hover:bg-yellow-500 text-yellow-500 font-semibold hover:text-white px-1 border-yellow-500 hover:border-transparent rounded">
-                                    <i class="fa fa-regular fa-edit"></i>
-                                </a>
-                                <a onclick="deletar( '{{ route('pagamentos-deletar', ['id' => $pagamento->id]) }}' )" class="bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white px-1 border-red-500 hover:border-transparent rounded">
-                                    <i class="fa fa-regular fa-trash"></i>
-                                </a>
                             </td>
                         </tr>
                     @endforeach
                 @endif
-                
+                <tr>
+                    <td>
+                        <b>Total à pagar</b>
+                    </td>
+                    <td>
+                        <b>R$ {{ number_format($somaNaoPagos, 2, ',', '.') }}</b>
+                    </td>
+                </tr>
             </tbody>
         </table>  
         @if (isset($pagamentos) && count($pagamentos) > 0)
@@ -78,8 +99,15 @@
 </x-app-layout>
 
 <script>
-   /*  $(document).ready(function() {
-        $('.valor').mask('#.##0,00', {reverse: true});
-    }) */
+   
+   function pagar(rotaPagar) {
+
+        msg = 'Confirmar pagamento?'
+
+        if ( confirm(msg) ) {
+            window.location.href = rotaPagar
+        }
+    }
+
 </script>
 

@@ -23,46 +23,23 @@
         </style>
     </head>
     <body class="antialiased">
-        <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
-            @if (Route::has('login'))
-                <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-                    @auth
-                        <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</a>
-                    @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
+        <div class="bg-gray-500 relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
                 <div class="container">
-                    <h1>Bem-vindo à Associação de Desenvolvedores do RN</h1>
-                    <p>Gerencie seu perfil de associado e o pagamento das suas anuidades.</p>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="card mb-4">
-                                <div class="card-header">Perfil do Associado</div>
-                                <div class="card-body">
-                                    <p>Visualize e edite suas informações de associado, como nome, endereço, telefone, e-mail, etc.</p>
-                                    <a href="#" class="btn btn-primary">Acessar Perfil</a>
+                    <div class="h-screen flex items-center justify-center">
+                        <div class="max-w-md w-full bg-white p-8 shadow-lg rounded-lg">
+                            <h1 class="text-3xl font-bold mb-4 text-center">Bem-vindo ao Gerenciamento de Anuidades de Associados</h1>
+                            <p class="text-lg mb-8 text-center">Aqui você pode gerenciar seus associados e suas anuidades de forma simples e eficiente.</p>
+                            @if (Route::has('login'))
+                                <div class="flex px-6 py-4 text-center sm:block">
+                                    @auth
+                                        <a href="{{ url('/dashboard') }}" class="text-lg text-gray-900 dark:text-gray-500 underline">Dashboard</a>
+                                    @else
+                                        <a href="{{ route('login') }}" class="text-lg text-gray-900 dark:text-gray-500 underline">Log in</a>
+                                    @endauth
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card mb-4">
-                                <div class="card-header">Pagamento das Anuidades</div>
-                                <div class="card-body">
-                                    <p>Gerencie o pagamento das suas anuidades, visualize o histórico de pagamentos e imprima boletos.</p>
-                                    <a href="#" class="btn btn-primary">Gerenciar Pagamentos</a>
-                                </div>
-                            </div>
+                            @endif
                         </div>
                     </div>
-                </div>
-
         </div>
     </body>
 </html>

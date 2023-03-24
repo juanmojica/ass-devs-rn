@@ -11,18 +11,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', [AssociadoController::class, 'dashboard'])
+    ->middleware(['auth'])->name('dashboard');
+
 
 Route::middleware(['auth'])->group(function () {
 
     Route::prefix('/associados')->group( function () {
 
         Route::get('/', [AssociadoController::class, 'index'])->name('associados');
+        Route::get('/pagamentos/em-dia', [AssociadoController::class, 'pagamentosEmDia'])->name('associados-em-dia');
+        Route::get('/pagamentos/em-atraso', [AssociadoController::class, 'pagamentosEmAtraso'])->name('associados-em-atraso');
         Route::get('/criar', [AssociadoController::class, 'create'])->name('associados-criar');
         Route::get('/{id}/exibir', [AssociadoController::class, 'show'])->name('associados-exibir');
         Route::get('/{id}/editar', [AssociadoController::class, 'edit'])->name('associados-editar');
+        Route::get('/dashboard', [AssociadoController::class, 'dashboard'])->name('associados-dashboard');
 
         Route::post('/', [AssociadoController::class, 'store'])->name('associados-salvar');
 
@@ -47,8 +50,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('/pagamentos')->group( function () {
 
-        Route::get('/', [PagamentoController::class, 'index'])->name('pagamentos');
-        Route::get('/criar', [PagamentoController::class, 'create'])->name('pagamentos-criar');
+        Route::get('/{id}/pagar/associado/{idAssociado}', [PagamentoController::class, 'pagar'])->name('pagamentos-pagar');
+
+       /*  Route::get('/criar', [PagamentoController::class, 'create'])->name('pagamentos-criar');
         Route::get('/{id}/exibir', [PagamentoController::class, 'show'])->name('pagamentos-exibir');
         Route::get('/{id}/editar', [PagamentoController::class, 'edit'])->name('pagamentos-editar');
 
@@ -56,7 +60,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::put('/{id}/atualizar', [PagamentoController::class, 'update'])->name('pagamentos-atualizar');
 
-        Route::delete('/{id}/deletar', [PagamentoController::class, 'destroy'])->name('pagamentos-deletar');
+        Route::delete('/{id}/deletar', [PagamentoController::class, 'destroy'])->name('pagamentos-deletar'); */
     });
 
 });

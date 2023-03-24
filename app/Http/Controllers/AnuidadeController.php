@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AnuidadeRequest;
 use App\Models\Anuidade;
+use App\Models\Associado;
+use App\Models\Pagamento;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AnuidadeController extends Controller
 {
@@ -51,11 +54,27 @@ class AnuidadeController extends Controller
             $dadosForm['valor'] = str_replace('.', '', $dadosForm['valor']);
             $dadosForm['valor'] = str_replace(',', '.', $dadosForm['valor']);
     
-            Anuidade::create($dadosForm);
-    
+            DB::transaction(function () use ($dadosForm) {
+
+                $anuidade = Anuidade::create($dadosForm);
+            
+                $associados = Associado::all('id');
+            
+                foreach ($associados as $associado) {
+                    
+                    Pagamento::create([
+                        'valor' => $anuidade->valor,
+                        'pago' => false,
+                        'associado_id' => $associado->id,
+                        'anuidade_id' => $anuidade->id,
+                    ]);
+                }
+            });      
+            
             return redirect()->route('anuidades')->with('sucesso', 'Anuidade criada.');
 
         } catch (\Exception $e) {
+            DB::rollBack();
             return redirect()->back()->with('erro', $e->getMessage());
         }
     }

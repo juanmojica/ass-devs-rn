@@ -5,15 +5,27 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('associados-dashboard') }}">
                         <x-application-logo class="block h-10 w-auto fill-current text-gray-600" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('associados-dashboard')" :active="request()->routeIs('associados-dashboard')">
+                        <i class="fa fa-regular fa-chart-pie"></i> &nbsp; Dashboard
+                    </x-nav-link>
+
                     <x-nav-link :href="route('associados')" :active="request()->routeIs('associados')">
-                        <i class="fa fa-solid fa-users"></i> &nbsp; Associados
+                        <i class="fa fa-solid fa-users"></i> &nbsp; Associados 
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('associados-em-dia')" :active="request()->routeIs('associados-em-dia')">
+                        <i class="fa fa-regular fa-user-check"></i></i> &nbsp; Associados Adimplentes
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('associados-em-atraso')" :active="request()->routeIs('associados-em-atraso')">
+                        <i class="fa fa-regular fa-user-clock"></i></i> &nbsp; Associados Inadimplentes
                     </x-nav-link>
 
                     @if ( auth()->user()->admin )
@@ -40,6 +52,10 @@
                     </x-slot>
 
                     <x-slot name="content">
+                        <div class="ml-4 text-sm">
+                            Perfil - {{ auth()->user()->admin ? 'Gerente' : 'Usuário' }}
+                        </div>
+
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -47,7 +63,7 @@
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                                {{ __('Log Out') }} <i class="fa fa-regular fa-arrow-right"></i>
                             </x-dropdown-link>
                         </form>
                     </x-slot>

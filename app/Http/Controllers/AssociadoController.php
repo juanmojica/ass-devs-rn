@@ -70,42 +70,13 @@ class AssociadoController extends Controller
     {
         try {
 
-            /* $selo = Selo::with([
-                'atos:id,codigo_ato,funcivil,tfj,iss,emolumentos,fundo_eletronizacao,total,selo_id', 
-            ])
-        ->where([['cartorio_id', $cartorio->id], ['codigo', $codigo_selo]])
-        ->Join('api_selos_especialidades as e', 'e.id', 'api_selos_selos.especialidade_id')
-        ->first([
-            'api_selos_selos.id',
-            'api_selos_selos.lote_selo_id',
-            'api_selos_selos.codigo as codigo_selo',
-            'api_selos_selos.codigo_validacao',
-            'api_selos_selos.tipo_lote',
-            'api_selos_selos.data',
-            'api_selos_selos.competencia',
-            'api_selos_selos.status',
-            'api_selos_selos.relatorio',
-            'e.especialidade'
-        ]);
-
-        if(empty($selo)){
-            throw new \Exception('Selo não encontrado', 404);
-        } */
-
-
-           /*  $pagamentos = $associado->pagamentos()
-                ->with('anuidade:id, valor, anuidade.id')
-                ->whereNull('deleted_at')->paginate(10);
-
-                dd($pagamentos); */
-            /* $pagamentos = $associado->pagamentos()
-                ->with('anuidade')
-                ->whereNull('deleted_at')->get(); */
-
-                $associado = Associado::findOrFail($id);
+            $associado = Associado::findOrFail($id);
 
             $pagamentos = $associado->pagamentos()
                 ->whereNull('pagamentos.deleted_at')
+                ->whereNull('anuidades.deleted_at')
+                ->orderBy('pagamentos.pago', 'desc')
+                ->orderBy('anuidades.ano', 'desc')
                 ->join('anuidades', 'pagamentos.anuidade_id', '=', 'anuidades.id')
                 ->select('pagamentos.*', 'anuidades.valor', 'anuidades.ano')
                 ->paginate(10);
@@ -182,6 +153,84 @@ class AssociadoController extends Controller
         } catch (\Exception $e) {
             throw new Exception($e->getMessage());
         }
+    }
+
+    public function pagamentosEmDia()
+    {
+        try {
+
+            $anoVigente = date('Y');
+
+            $associados = Associado::whereHas('pagamentos', function ($query) use ($anoVigente) {
+                $query->where('pago', true)
+                    ->whereHas('anuidade', function ($query) use ($anoVigente) {
+                        $query->where('ano', '<=', $anoVigente);
+                    });
+            })
+                ->orderBy('nome')
+                ->paginate(10);
+
+            return view('associados.index', compact('associados'));
+
+        } catch (\Exception $e) {
+            return redirect()->route('home')->with('erro', $e->getMessage());
+        }
+        
+    }
+
+    public function pagamentosEmAtraso()
+    {
+        try {
+
+            $anoVigente = date('Y');
+
+            $associados = Associado::whereHas('pagamentos', function ($query) use ($anoVigente) {
+                $query->where('pago', false)
+                    ->whereHas('anuidade', function ($query) use ($anoVigente) {
+                        $query->where('ano', '<=', $anoVigente);
+                    });
+            })
+                ->orderBy('nome')
+                ->paginate(10);
+
+            return view('associados.index', compact('associados'));
+
+        } catch (\Exception $e) {
+            return redirect()->route('home')->with('erro', $e->getMessage());
+        }
+        
+    }
+
+    public function dashboard()
+    {
+        try {
+           
+            $anoVigente = date('Y');
+
+            $associadosEmDia = Associado::whereHas('pagamentos', function ($query) use ($anoVigente) {
+                $query->where('pago', true)
+                    ->whereHas('anuidade', function ($query) use ($anoVigente) {
+                        $query->where('ano', '<=', $anoVigente);
+                    });
+            })
+                ->orderBy('nome')
+                ->paginate(10);
+
+            $associadosEmAtraso = Associado::whereHas('pagamentos', function ($query) use ($anoVigente) {
+                $query->where('pago', false)
+                    ->whereHas('anuidade', function ($query) use ($anoVigente) {
+                        $query->where('ano', '<=', $anoVigente);
+                    });
+            })
+                ->orderBy('nome')
+                ->paginate(10);
+
+            return view('associados.dashboard', compact('associadosEmDia', 'associadosEmAtraso'));
+
+        } catch (\Exception $e) {
+            return redirect()->route('home')->with('erro', $e->getMessage());
+        }
+        
     }
 
 }

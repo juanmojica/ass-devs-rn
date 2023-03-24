@@ -34,6 +34,14 @@
                     Ano
             </label>
             <select id="ano" name="ano" class="{{$disabled}} appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+               
+                @if (isset($anuidade))
+                    
+                    @for ($i = date('Y'); $i <= date('Y') + 5; $i++)
+                        <option value="{{ $i }}" {{ $i == $anuidade->ano ? 'selected' : '' }} >{{ $i }}</option>
+                    @endfor
+                
+                @endif
                 <option value="">Selecione...</option>
                 @for ($i = date('Y'); $i <= date('Y') + 5; $i++)
                     <option value="{{ $i }}">{{ $i }}</option>

@@ -39,14 +39,23 @@
                             {{ $anuidade->valor }}
                         </td>
                         <td class="text-center">
-                            <a href="{{  route('anuidades-exibir', ['id' => $anuidade->id]) }}" class="bg-transparent hover:bg-blue-500 text-blue-500 font-semibold hover:text-white px-1 border-blue-500 hover:border-transparent rounded">
-                                <i class="fa fa-regular fa-eye"></i>
+                            <a 
+                                title="Exibir detalhes da anuidade"
+                                href="{{  route('anuidades-exibir', ['id' => $anuidade->id]) }}" 
+                                class="bg-transparent hover:bg-blue-500 text-blue-500 font-semibold hover:text-white px-1 border-blue-500 hover:border-transparent rounded">
+                                    <i class="fa fa-regular fa-eye"></i>
                             </a>
-                            <a href="{{ route('anuidades-editar', ['id' => $anuidade->id]) }}" class="bg-transparent hover:bg-yellow-500 text-yellow-500 font-semibold hover:text-white px-1 border-yellow-500 hover:border-transparent rounded">
-                                <i class="fa fa-regular fa-edit"></i>
+                            <a 
+                                title="Editar anuidade"
+                                href="{{ route('anuidades-editar', ['id' => $anuidade->id]) }}" 
+                                class="bg-transparent hover:bg-yellow-500 text-yellow-500 font-semibold hover:text-white px-1 border-yellow-500 hover:border-transparent rounded">
+                                    <i class="fa fa-regular fa-edit"></i>
                             </a>
-                            <a onclick="deletar( '{{ route('anuidades-deletar', ['id' => $anuidade->id]) }}' )" class="bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white px-1 border-red-500 hover:border-transparent rounded">
-                                <i class="fa fa-regular fa-trash"></i>
+                            <a 
+                                title="Deletar anuidade"
+                                onclick="deletar( '{{ route('anuidades-deletar', ['id' => $anuidade->id]) }}' )" 
+                                class="bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white px-1 border-red-500 hover:border-transparent rounded">
+                                    <i class="fa fa-regular fa-trash"></i>
                             </a>
                         </td>
                     </tr>
@@ -61,20 +70,20 @@
     </div>
 </x-app-layout>
 
- <form id="formDeletar" action="" method="POST" style="display: none;">
-     @csrf
-     @method('DELETE')
- </form>
- 
- <script>
+<form id="formDeletar" action="" method="POST" style="display: none;">
+    @csrf
+    @method('DELETE')
+</form>
+
+<script>
 
     $(document).ready(function() {
         $('.cpf').mask('000.000.000-00'); 
     });
-     
+    
     function deletar(rotaDeletar) {
 
-        msg = 'Tem certeza que deseja deletar esse anuidade?'
+        msg = 'Tem certeza que deseja deletar essa anuidade?'
 
         if ( confirm(msg) ) {
 
@@ -83,7 +92,7 @@
         }
     }
 
- </script>
+</script>
  
  
  
