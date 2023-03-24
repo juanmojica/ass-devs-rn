@@ -1,6 +1,6 @@
 # Software de Gerenciamento de Associados e Anuidades
 
-Este software foi desenvolvido para facilitar a gerência dos associados e suas anuidades da associação "Devs do RN". Abaixo estão listadas as funcionalidades que o software oferece:
+Este software foi desenvolvido para facilitar a gerência dos associados e suas anuidades da associação "Devs do RN". Abaixo estão listadas as funcionalidades que o software oferece.
 
 ## Funcionalidades
 
@@ -51,12 +51,12 @@ Para instalar e utilizar o software, siga as instruções abaixo:
 1. Na aba Dashboard é exibido um gráfico com os associados adimplentes e os inadimplentes
 2. Na aba Associados é exibida a lista de associados com seus devidos botões:
     - Esta aba ofere o CRUD de associados, porém na aba visualizar detalhes é listados, além dos dados pessoais 
-    do associado, a lista pagamentos deste informando a anuidades pagas e as devidas.
+    do associado, a lista de pagamentos deste, informando as anuidades pagas e as devidas.
 3. Nas abas associados adimplentes e na associados inadimplentes também é possível manter os dados do associado,
-    no entanto,  como os próprios nomes sugerem, eles listam os associados de acordo com a sua situação de pagamento.
+    no entanto,  como os próprios nomes sugerem, elas listam os associados de acordo com a sua situação de pagamento.
 4. Já a aba anuidades, prover o CRUD de anuidades e esse é disponível apenas para o gerente.
 
-- OBS: Ao inserir uma anuidade, essa anuidade e atribuída para todos os usuários, porém o usuário só é considerado
+- OBS: Ao inserir uma anuidade, essa anuidade será atribuída para todos os usuários, porém o usuário só é considerado
 inadimplente se ele não pagou a anuidade do ano vigente ou alguma anterior a este. 
 
 
