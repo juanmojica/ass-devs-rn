@@ -35,7 +35,7 @@ Para instalar e utilizar o software, siga as instruções abaixo:
         - DB_USERNAME=root
         - DB_PASSWORD=
 7. Rode as migrações do banco de dados: `php artisan migrate --seed`
-    - Após rodar as migrações serão criadas as tabelas e alguns dados fake para teste da aplicação.
+    - Após rodar as migrações serão criadas as tabelas e inseridos 20 associados e 2 usuários.
     - Serão criados dois usuários, um com o perfil de gerente e outro com o perfil usuário:
         - Usuário com perfil de gerente:
             - login: jp@devsrn.com
@@ -45,6 +45,9 @@ Para instalar e utilizar o software, siga as instruções abaixo:
             - senha: 456
 8. Inicie o servidor: `php artisan serve`.
 9. Em seguida pode logar com o usuário desejado.
+10. Ao entrar na aplicação, vá na aba anuidades e cadastre uma anuidade com o ano vigente.
+Essa anuidade será atribuída para todos os associados e todos ficarão como inadimplentes.
+
 
 ## Informações sobre o funcionamento do sistema
 

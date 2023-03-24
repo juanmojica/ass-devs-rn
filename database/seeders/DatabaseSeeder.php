@@ -16,19 +16,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         \App\Models\Anuidade::factory(5)->create();
-         \App\Models\Associado::factory(20)->create();
+        \App\Models\Associado::factory(20)->create();
 
-         $adminUser = [
+        $adminUser = [
             'name' => 'João Paulo',
             'email' => 'jp@devsrn.com',
             'email_verified_at' => now(),
             'admin' => 1,
             'password' => bcrypt('123'), // password
             'remember_token' => Str::random(10),
-         ];
+            ];
 
-         $user = [
+        $user = [
             'name' => 'Paulo André',
             'email' => 'pa@devsrn.com',
             'email_verified_at' => now(),
@@ -37,8 +36,8 @@ class DatabaseSeeder extends Seeder
         ];
 
 
-         \App\Models\User::factory(1)->createOne($adminUser);
-         \App\Models\User::factory(1)->createOne($user);
+        \App\Models\User::factory(1)->createOne($adminUser);
+        \App\Models\User::factory(1)->createOne($user);
 
     }
 }

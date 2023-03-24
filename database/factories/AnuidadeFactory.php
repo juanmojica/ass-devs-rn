@@ -15,7 +15,7 @@ class AnuidadeFactory extends Factory
     public function definition()
     {
         return [
-            'ano' => $this->faker->year(),
+            'ano' => random_int(2018, 2023),
             'valor' => $this->faker->randomFloat(2, 100, 500)
         ];
     }

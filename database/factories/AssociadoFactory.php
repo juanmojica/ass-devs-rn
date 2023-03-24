@@ -17,7 +17,7 @@ class AssociadoFactory extends Factory
         return [
             'nome' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
-            'cpf' => Str::random(11),
+            'cpf' => rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9),
             'data_filiacao' => $this->faker->date(), 
         ];
     }
